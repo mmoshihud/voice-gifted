@@ -1,16 +1,32 @@
+import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { AuthContext } from "../../provider/AuthProvider";
 
 const SignUp = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const { createUser, updateUserProfile } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  console.log(watch("example")); // watch input value by passing the name of it
+  const onSubmit = (data) => {
+    createUser(data.email, data.password)
+      .then(() => {
+        updateUserProfile(data.name, data.photo_url)
+          .then(() => {
+            navigate("/");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
 
   return (
     <form
@@ -29,45 +45,66 @@ const SignUp = () => {
         </label>
         <input
           type="text"
-          name="name"
+          {...register("name", { required: true })}
           className="mb-2 w-full border px-2 py-1 text-xl focus:outline-none"
           placeholder="Enter Full Name"
         />
+        {errors.name && (
+          <span className="mb-4 text-lg font-bold text-red-600">
+            *Name is required
+          </span>
+        )}
         <label className="mb-2 block text-xl" htmlFor="email">
           Email
         </label>
         <input
           type="text"
-          name="email"
+          {...register("email", { required: true })}
           className="mb-2 w-full border px-2 py-1 text-xl focus:outline-none"
           placeholder="Enter Email"
         />
+        {errors.email && (
+          <span className="mb-4 text-lg font-bold text-red-600">
+            *Email is required
+          </span>
+        )}
         <label className="mb-2 block text-xl" htmlFor="password">
           Password
         </label>
         <input
           type="password"
-          name="password"
+          {...register("password", { required: true })}
           className="mb-4 w-full border px-2 py-1 text-xl focus:outline-none"
           placeholder="Enter Password"
         />
+        {errors.password && (
+          <span className="mb-4 text-lg font-bold text-red-600">
+            *Password is required
+          </span>
+        )}
         <label className="mb-2 block text-xl" htmlFor="confirm">
           Confirm Password
         </label>
         <input
           type="password"
-          name="confirm"
+          {...register("confirm_password", { required: true })}
           className="mb-4 w-full border px-2 py-1 text-xl focus:outline-none"
           placeholder="Confirm Password"
         />
-        <input type="checkbox" className="mb-4 mr-2" />
-        <span className="mb-4 text-base">show</span>
+        {errors.confirm_password && (
+          <span className="mb-4 text-lg font-bold text-red-600">
+            *Password Didn't match
+          </span>
+        )}
+
+        <p className="cursor-pointer text-lg">show</p>
+
         <label className="mb-2 block text-xl" htmlFor="photo_url">
           Photo Url
         </label>
         <input
           type="url"
-          name="photo_url"
+          {...register("photo_url")}
           className="mb-2 w-full border px-2 py-1 text-xl focus:outline-none"
           placeholder="Enter Photo URL"
         />
