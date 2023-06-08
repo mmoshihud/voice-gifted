@@ -1,16 +1,19 @@
+import { AuthContext } from "../../provider/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { AuthContext } from "../../provider/AuthProvider";
+import { useState } from "react";
 
 const SignUp = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm();
   const { createUser, updateUserProfile } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = (data) => {
     createUser(data.email, data.password)
@@ -26,6 +29,10 @@ const SignUp = () => {
       .catch((error) => {
         console.log(error.message);
       });
+  };
+
+  const showPasswordHandle = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -58,46 +65,75 @@ const SignUp = () => {
           Email
         </label>
         <input
-          type="text"
-          {...register("email", { required: true })}
+          type="email"
+          {...register("email", {
+            required: "Email is required",
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: "Invalid email address",
+            },
+          })}
           className="mb-2 w-full border px-2 py-1 text-xl focus:outline-none"
           placeholder="Enter Email"
         />
         {errors.email && (
           <span className="mb-4 text-lg font-bold text-red-600">
-            *Email is required
+            {errors.email.message}
           </span>
         )}
         <label className="mb-2 block text-xl" htmlFor="password">
           Password
         </label>
         <input
-          type="password"
-          {...register("password", { required: true })}
+          type={showPassword ? "text" : "password"}
+          {...register("password", {
+            required: "Password is required",
+            minLength: {
+              value: 6,
+              message: "Password must be at least 6 characters long",
+            },
+            pattern: {
+              value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*\W).+$/,
+              message:
+                "Password must contain 1 uppercase, 1 lowercase, 1 number, 1 special character",
+            },
+          })}
           className="mb-4 w-full border px-2 py-1 text-xl focus:outline-none"
           placeholder="Enter Password"
         />
         {errors.password && (
           <span className="mb-4 text-lg font-bold text-red-600">
-            *Password is required
+            {errors.password.message}
           </span>
         )}
         <label className="mb-2 block text-xl" htmlFor="confirm">
           Confirm Password
         </label>
         <input
-          type="password"
-          {...register("confirm_password", { required: true })}
+          type={showPassword ? "text" : "password"}
+          {...register("confirm_password", {
+            required: "*Confirm Password is required",
+            validate: (pass) => {
+              if (watch("password") != pass) {
+                return "Your passwords don't match";
+              }
+            },
+          })}
           className="mb-4 w-full border px-2 py-1 text-xl focus:outline-none"
           placeholder="Confirm Password"
         />
         {errors.confirm_password && (
           <span className="mb-4 text-lg font-bold text-red-600">
-            *Password Didn't match
+            {errors.confirm_password.message}
           </span>
         )}
 
-        <p className="cursor-pointer text-lg">show</p>
+        <p
+          onClick={showPasswordHandle}
+          className="mb-4 cursor-pointer text-pink-800 underline"
+        >
+          {showPassword ? "Hide Password" : "Show Password"}
+        </p>
 
         <label className="mb-2 block text-xl" htmlFor="photo_url">
           Photo Url

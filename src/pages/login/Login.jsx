@@ -1,17 +1,20 @@
+import { AuthContext } from "../../provider/AuthProvider";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../provider/AuthProvider";
+import { useState } from "react";
 
 const Login = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm();
 
   const { signIn } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = (data) => {
     signIn(data.email, data.password)
@@ -22,6 +25,11 @@ const Login = () => {
         console.log(error.message);
       });
   };
+
+  const showPasswordHandle = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -38,21 +46,27 @@ const Login = () => {
           Email
         </label>
         <input
-          type="text"
-          {...register("email", { required: true })}
+          type="email"
+          {...register("email", {
+            required: "Email is required",
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: "Invalid email address",
+            },
+          })}
           className="mb-2 w-full border px-2 py-1 text-xl focus:outline-none"
           placeholder="Enter Email"
         />
         {errors.email && (
           <span className="mb-4 text-lg font-bold text-red-600">
-            *Email is required
+            {errors.email.message}
           </span>
         )}
         <label className="mb-2 block text-xl" htmlFor="password">
           Password
         </label>
         <input
-          type="password"
+          type={showPassword ? "text" : "password"}
           {...register("password", { required: true })}
           className="mb-4 w-full border px-2 py-1 text-xl focus:outline-none"
           placeholder="Enter Password"
@@ -63,7 +77,12 @@ const Login = () => {
           </span>
         )}
 
-        <p className="cursor-pointer text-lg">show</p>
+        <p
+          onClick={showPasswordHandle}
+          className="mb-4 cursor-pointer text-pink-800 underline"
+        >
+          {showPassword ? "Hide Password" : "Show Password"}
+        </p>
 
         <button
           type="submit"

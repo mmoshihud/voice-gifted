@@ -3,7 +3,7 @@ import { NavLink, Link } from "react-router-dom";
 import { AuthContext } from "../../provider/AuthProvider";
 
 const Header = () => {
-  const { logOut } = useContext(AuthContext);
+  const { logOut, user, loading } = useContext(AuthContext);
   const handleLogOut = () => {
     logOut().then(console.log("Log out success"));
   };
@@ -54,7 +54,7 @@ const Header = () => {
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
-          <li>
+          <li className="text-lg font-bold text-white hover:text-black">
             <NavLink
               className={({ isActive, isPending }) =>
                 isActive
@@ -63,32 +63,37 @@ const Header = () => {
                   ? "pending"
                   : "text-gray-500"
               }
-              to="/login"
+              to="/"
             >
-              Login
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              className={({ isActive, isPending }) =>
-                isActive
-                  ? "bg-secondary"
-                  : isPending
-                  ? "pending"
-                  : "text-gray-500"
-              }
-              to="/sign-up"
-            >
-              Sign Up
+              Home
             </NavLink>
           </li>
         </ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Button</a>
-        <Link className="btn" onClick={handleLogOut}>
-          Log Out
-        </Link>
+        <ul>
+          {loading ? (
+            <div>Loading</div>
+          ) : user ? (
+            <>
+              <li>
+                <Link to="/user-profile">User Profile</Link>
+              </li>
+              <li>
+                <Link onClick={handleLogOut}>Log Out</Link>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+              <li>
+                <Link to="/sign-up">Sign Up</Link>
+              </li>
+            </>
+          )}
+        </ul>
       </div>
     </div>
   );
