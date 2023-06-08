@@ -1,9 +1,11 @@
+import { NavLink } from "react-router-dom";
+
 const Header = () => {
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
         <div className="dropdown">
-          <label tabIndex={0} className="btn btn-ghost lg:hidden">
+          <label tabIndex={0} className="btn-ghost btn lg:hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -21,7 +23,7 @@ const Header = () => {
           </label>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+            className="dropdown-content menu rounded-box menu-sm mt-3 w-52 bg-base-100 p-2 shadow"
           >
             <li>
               <a>Item 1</a>
@@ -42,28 +44,37 @@ const Header = () => {
             </li>
           </ul>
         </div>
-        <a className="btn btn-ghost normal-case text-xl">daisyUI</a>
+        <a className="btn-ghost btn text-xl normal-case">daisyUI</a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <a>Item 1</a>
-          </li>
-          <li tabIndex={0}>
-            <details>
-              <summary>Parent</summary>
-              <ul className="p-2">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </details>
+            <NavLink
+              className={({ isActive, isPending }) =>
+                isActive
+                  ? "bg-secondary"
+                  : isPending
+                  ? "pending"
+                  : "text-gray-500"
+              }
+              to="/login"
+            >
+              Login
+            </NavLink>
           </li>
           <li>
-            <a>Item 3</a>
+            <NavLink
+              className={({ isActive, isPending }) =>
+                isActive
+                  ? "bg-secondary"
+                  : isPending
+                  ? "pending"
+                  : "text-gray-500"
+              }
+              to="/sign-up"
+            >
+              Sign Up
+            </NavLink>
           </li>
         </ul>
       </div>
