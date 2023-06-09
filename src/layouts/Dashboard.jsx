@@ -1,12 +1,11 @@
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
 const Dashboard = () => {
   return (
     <>
       <div className="drawer lg:drawer-open">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content flex flex-col items-center justify-center">
-          {/* Page content here */}
+        <div className="drawer-content p-24">
           <Outlet />
           <label
             htmlFor="my-drawer-2"
@@ -18,12 +17,11 @@ const Dashboard = () => {
         <div className="drawer-side">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
           <ul className="menu h-full w-80 bg-base-200 p-4 text-base-content">
-            {/* Sidebar content here */}
             <li>
-              <a>Sidebar Item 1</a>
+              <Link to="/dashboard">Admin Home</Link>
             </li>
             <li>
-              <a>Sidebar Item 2</a>
+              <Link to="user-list">User List</Link>
             </li>
           </ul>
         </div>
