@@ -52,7 +52,24 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       console.log("The User is", currentUser);
-      setLoading(false);
+
+      if (currentUser) {
+        fetch("http://localhost:5000/jwt", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({ email: currentUser.email }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            localStorage.setItem("access-token", data.token);
+            setLoading(false);
+          });
+      } else {
+        localStorage.removeItem("access-token");
+        setLoading(false);
+      }
     });
     return () => {
       return unsubscribe();

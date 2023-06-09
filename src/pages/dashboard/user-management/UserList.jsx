@@ -1,9 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const UserList = () => {
+  const [axiosSecure] = useAxiosSecure();
   const { data: users = [], refetch } = useQuery(["users"], async () => {
-    const response = await fetch("http://localhost:5000/users");
-    return response.json();
+    const response = await axiosSecure("/users");
+    console.log(response);
+    return response.data;
   });
 
   const makeAdminHandler = (user) => {
