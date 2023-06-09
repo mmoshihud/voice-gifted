@@ -8,18 +8,18 @@ const Login = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
 
-  const { signIn } = useContext(AuthContext);
+  const { signIn, googleSignIn } = useContext(AuthContext);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const from = location.state?.form?.pathname || "/";
 
   const onSubmit = (data) => {
     signIn(data.email, data.password)
       .then(() => {
-        navigate("/");
+        navigate(from, { replace: true });
       })
       .catch((error) => {
         console.log(error.message);
@@ -28,6 +28,12 @@ const Login = () => {
 
   const showPasswordHandle = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleGoogleLogin = () => {
+    googleSignIn()
+      .then(() => navigate(from, { replace: true }))
+      .catch((error) => console.log(error.message));
   };
 
   return (
@@ -91,6 +97,7 @@ const Login = () => {
           Login
         </button>
         <button
+          onClick={handleGoogleLogin}
           type="button"
           className="my-4 w-full rounded-xl border-2 border-secondary px-5 py-2 text-xl font-semibold text-slate-500"
         >

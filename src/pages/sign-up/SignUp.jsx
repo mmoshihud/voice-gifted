@@ -9,18 +9,38 @@ const SignUp = () => {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm();
-  const { createUser, updateUserProfile } = useContext(AuthContext);
+  const { createUser, updateUserProfile, googleSignIn } =
+    useContext(AuthContext);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const from = location.state?.form?.pathname || "/";
 
   const onSubmit = (data) => {
     createUser(data.email, data.password)
       .then(() => {
         updateUserProfile(data.name, data.photo_url)
           .then(() => {
-            navigate("/");
+            fetch("http://localhost:5000/users", {
+              method: "POST",
+              headers: {
+                "content-type": "application/json",
+              },
+              body: JSON.stringify({
+                name: data.name,
+                email: data.email,
+                photoUrl: data.photo_url,
+              }),
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                if (data.insertedId) {
+                  reset();
+                  navigate(from, { replace: true });
+                }
+              });
           })
           .catch((error) => {
             console.log(error);
@@ -33,6 +53,27 @@ const SignUp = () => {
 
   const showPasswordHandle = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleGoogleLogin = () => {
+    googleSignIn()
+      .then((result) => {
+        const user = result.user;
+        fetch("http://localhost:5000/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({
+            name: user.displayName,
+            email: user.email,
+            photoUrl: user.photoURL,
+          }),
+        })
+          .then((res) => res.json())
+          .then(() => navigate(from, { replace: true }));
+      })
+      .catch((error) => console.log(error.message));
   };
 
   return (
@@ -151,6 +192,7 @@ const SignUp = () => {
           Sign Up
         </button>
         <button
+          onClick={handleGoogleLogin}
           type="button"
           className="my-4 w-full rounded-xl border-2 border-secondary px-5 py-2 text-xl font-semibold text-slate-500"
         >
