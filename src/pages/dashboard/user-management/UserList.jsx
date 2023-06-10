@@ -5,7 +5,6 @@ const UserList = () => {
   const [axiosSecure] = useAxiosSecure();
   const { data: users = [], refetch } = useQuery(["users"], async () => {
     const response = await axiosSecure("/users");
-    console.log(response);
     return response.data;
   });
 
@@ -19,6 +18,7 @@ const UserList = () => {
         }
       });
   };
+
   return (
     <>
       <h1>Total Users {users.length}</h1>

@@ -6,6 +6,8 @@ import Home from "../pages/home/Home";
 import Login from "../pages/login/Login";
 import SignUp from "../pages/sign-up/SignUp";
 import UserList from "../pages/dashboard/user-management/UserList";
+import AdminRoute from "./AdminRoute";
+import AddClass from "../pages/dashboard/manage-classes/AddClass";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +30,19 @@ const router = createBrowserRouter([
       },
       {
         path: "user-list",
-        element: <UserList />,
+        element: (
+          <AdminRoute>
+            <UserList />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "add-class",
+        element: (
+          <AdminRoute>
+            <AddClass />
+          </AdminRoute>
+        ),
       },
     ],
   },
