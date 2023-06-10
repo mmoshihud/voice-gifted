@@ -1,5 +1,3 @@
-import Dashboard from "../../../layouts/Dashboard";
-
 const AdminHome = () => {
   return (
     <>

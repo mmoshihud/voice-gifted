@@ -1,8 +1,7 @@
-import { AuthContext } from "../../provider/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
-import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import useAuth from "../../hooks/useAuth";
 
 const SignUp = () => {
   const {
@@ -12,8 +11,7 @@ const SignUp = () => {
     reset,
     formState: { errors },
   } = useForm();
-  const { createUser, updateUserProfile, googleSignIn } =
-    useContext(AuthContext);
+  const { createUser, updateUserProfile, googleSignIn } = useAuth();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const from = location.state?.form?.pathname || "/";
