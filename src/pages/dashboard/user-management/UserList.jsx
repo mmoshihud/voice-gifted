@@ -1,5 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
+import SectionTitle from "../../../components/section-title/SectionTitle";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { FaUserShield, FaChalkboardTeacher } from "react-icons/fa";
 
 const UserList = () => {
   const [axiosSecure] = useAxiosSecure();
@@ -21,32 +23,56 @@ const UserList = () => {
 
   return (
     <>
-      <h1>Total Users {users.length}</h1>
-      <div className="overflow-x-auto">
-        <table className="table-zebra table">
-          {/* head */}
-          <thead>
-            <tr>
-              <th></th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Role Color</th>
-              <th>Action</th>
+      <SectionTitle heading="List Of Users"></SectionTitle>
+      <table className="table-zebra table text-center">
+        <thead>
+          <tr>
+            <th>Sl</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user, index) => (
+            <tr key={user._id}>
+              <th>{index + 1}</th>
+              <td>{user.name}</td>
+              <td>{user.email}</td>
+              <td>
+                <span className="badge badge-ghost badge-md bg-warning uppercase">
+                  {user.role}
+                </span>
+              </td>
+              <td>
+                <button
+                  onClick={() => makeAdminHandler(user)}
+                  className={`mr-2 rounded ${
+                    user.role === "admin" ? "bg-red-900" : "bg-red-600"
+                  } p-3 text-white`}
+                  title="Make Admin"
+                  disabled={user.role === "admin"}
+                >
+                  <FaUserShield size={30} />
+                </button>
+                <button
+                  onClick={() => makeAdminHandler(user)}
+                  className={`mr-2 rounded ${
+                    user.role === "instructor"
+                      ? "bg-yellow-900"
+                      : "bg-yellow-500"
+                  } p-3 text-white`}
+                  title="Make Instructor"
+                  disabled={user.role === "instructor"}
+                >
+                  <FaChalkboardTeacher size={30} />
+                </button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {users.map((user, index) => (
-              <tr key={user._id}>
-                <th>{index + 1}</th>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.role}</td>
-                <td onClick={() => makeAdminHandler(user)}>make admin</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
     </>
   );
 };

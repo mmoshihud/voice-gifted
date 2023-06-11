@@ -8,6 +8,7 @@ import SignUp from "../pages/sign-up/SignUp";
 import UserList from "../pages/dashboard/user-management/UserList";
 import AdminRoute from "./AdminRoute";
 import AddClass from "../pages/dashboard/manage-classes/AddClass";
+import ClassList from "../pages/dashboard/manage-classes/ClassList";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,14 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <AddClass />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "class-list",
+        element: (
+          <AdminRoute>
+            <ClassList />
           </AdminRoute>
         ),
       },
