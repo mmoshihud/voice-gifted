@@ -51,7 +51,6 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      console.log("The User is", currentUser);
 
       if (currentUser) {
         fetch("http://localhost:5000/jwt", {

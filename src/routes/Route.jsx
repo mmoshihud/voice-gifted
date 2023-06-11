@@ -10,6 +10,7 @@ import AdminRoute from "./AdminRoute";
 import AddClass from "../pages/dashboard/manage-classes/AddClass";
 import ClassList from "../pages/dashboard/manage-classes/ClassList";
 import InstructorClassList from "../pages/dashboard/manage-classes/InstructorClassList";
+import EditClass from "../pages/dashboard/manage-classes/EditClass";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
       {
         path: "add-class",
         element: <AddClass />,
+      },
+      {
+        path: "edit-class/:id",
+        element: <EditClass />,
       },
       {
         path: "class-list",

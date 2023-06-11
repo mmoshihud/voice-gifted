@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 import SectionTitle from "../../../components/section-title/SectionTitle";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -6,7 +7,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 const InstructorClassList = () => {
   const [axiosSecure] = useAxiosSecure();
   const { user } = useAuth();
-  const { data: classes = [], refetch } = useQuery(["classes"], async () => {
+  const { data: classes = [] } = useQuery(["classes"], async () => {
     const response = await axiosSecure(`/classes/${user.email}`);
     console.log(response);
     return response.data;
@@ -42,7 +43,12 @@ const InstructorClassList = () => {
                 <td>${classData.price}</td>
                 <th>
                   <button className="btn-primary btn mr-2">Feedback</button>
-                  <button className="btn-success btn">Edit</button>
+                  <Link
+                    to={"/dashboard/edit-class/" + classData._id}
+                    className="btn-success btn"
+                  >
+                    Edit
+                  </Link>
                 </th>
               </tr>
             ))}
