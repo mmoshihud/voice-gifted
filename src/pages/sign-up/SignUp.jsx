@@ -30,6 +30,7 @@ const SignUp = () => {
                 name: data.name,
                 email: data.email,
                 photoUrl: data.photo_url,
+                role: "student",
               }),
             })
               .then((res) => res.json())
@@ -66,6 +67,7 @@ const SignUp = () => {
             name: user.displayName,
             email: user.email,
             photoUrl: user.photoURL,
+            role: "student",
           }),
         })
           .then((res) => res.json())

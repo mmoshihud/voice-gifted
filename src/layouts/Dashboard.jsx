@@ -43,6 +43,12 @@ const Dashboard = () => {
                 <li>
                   <Link to="my-class">My Class</Link>
                 </li>
+                <li>
+                  <Link to="my-selected-classes">My Selected Class</Link>
+                </li>
+                <li>
+                  <Link to="my-enrolled-classes">My Enrolled Class</Link>
+                </li>
               </>
             </ul>
           </div>

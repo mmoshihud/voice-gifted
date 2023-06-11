@@ -7,7 +7,7 @@ const Header = () => {
     logOut().then(console.log("Log out success"));
   };
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar mb-8 bg-base-100">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn-ghost btn lg:hidden">
@@ -53,11 +53,11 @@ const Header = () => {
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
-          <li className="text-lg font-bold text-white hover:text-black">
+          <li>
             <NavLink
               className={({ isActive, isPending }) =>
                 isActive
-                  ? "bg-secondary"
+                  ? "text-accent"
                   : isPending
                   ? "pending"
                   : "text-gray-500"
@@ -65,6 +65,20 @@ const Header = () => {
               to="/"
             >
               Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              className={({ isActive, isPending }) =>
+                isActive
+                  ? "text-accent"
+                  : isPending
+                  ? "pending"
+                  : "text-gray-500"
+              }
+              to="/class"
+            >
+              All Classes
             </NavLink>
           </li>
         </ul>
