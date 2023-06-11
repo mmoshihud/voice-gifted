@@ -1,25 +1,25 @@
 import { useQuery } from "@tanstack/react-query";
 import SectionTitle from "../../../components/section-title/SectionTitle";
+import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
-const ClassList = () => {
+const InstructorClassList = () => {
   const [axiosSecure] = useAxiosSecure();
+  const { user } = useAuth();
   const { data: classes = [], refetch } = useQuery(["classes"], async () => {
-    const response = await axiosSecure("/classes");
+    const response = await axiosSecure(`/classes/${user.email}`);
+    console.log(response);
     return response.data;
   });
   return (
     <>
-      <SectionTitle heading="List Of Classes"></SectionTitle>
+      <SectionTitle heading="My Classes"></SectionTitle>
       <div className="overflow-x-auto">
         <table className="table text-center">
-          {/* head */}
           <thead>
             <tr>
               <th>Class Image</th>
               <th>Class Name</th>
-              <th>Instructor Name</th>
-              <th>Instructor email</th>
               <th>Available seats</th>
               <th>Price</th>
               <th>Action</th>
@@ -38,14 +38,11 @@ const ClassList = () => {
                 <td>
                   <div className="font-bold">{classData.name}</div>
                 </td>
-                <td>{classData.instructorName}</td>
-                <td>{classData.instructorEmail}</td>
                 <td>{classData.availableSeats}</td>
                 <td>${classData.price}</td>
                 <th>
-                  <button className="btn-success btn mr-2">Approve</button>
-                  <button className="btn-error btn mr-2">Deny</button>
-                  <button className="btn-info btn">Details</button>
+                  <button className="btn-primary btn mr-2">Feedback</button>
+                  <button className="btn-success btn">Edit</button>
                 </th>
               </tr>
             ))}
@@ -56,4 +53,4 @@ const ClassList = () => {
   );
 };
 
-export default ClassList;
+export default InstructorClassList;

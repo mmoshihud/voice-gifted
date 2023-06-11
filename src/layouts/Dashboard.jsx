@@ -32,13 +32,16 @@ const Dashboard = () => {
                     <li>
                       <Link to="user-list">User List</Link>
                     </li>
+                    <li>
+                      <Link to="class-list">Class List</Link>
+                    </li>
                   </>
                 ) : null}
                 <li>
                   <Link to="add-class">Add Class</Link>
                 </li>
                 <li>
-                  <Link to="class-list">Class List</Link>
+                  <Link to="my-class">My Class</Link>
                 </li>
               </>
             </ul>

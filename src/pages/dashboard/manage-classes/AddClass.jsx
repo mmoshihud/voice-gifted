@@ -37,6 +37,7 @@ const AddClass = () => {
             instructorEmail: user.email,
             price: parseFloat(price.replace("$", "")),
             availableSeats,
+            status: "pending",
           })
           .then((data) => {
             console.log(data.data);
