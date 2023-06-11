@@ -11,7 +11,6 @@ const EditClass = () => {
   const [axiosSecure] = useAxiosSecure();
 
   const { data: classData = [] } = useQuery(["class"], async () => {
-    console.log(id);
     const response = await axiosSecure(`/class/edit/${id}`);
     return response.data;
   });

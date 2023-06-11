@@ -1,13 +1,45 @@
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import SectionTitle from "../../../components/section-title/SectionTitle";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const ClassList = () => {
   const [axiosSecure] = useAxiosSecure();
+  const [disabledButtons, setDisabledButtons] = useState({});
+
   const { data: classes = [], refetch } = useQuery(["classes"], async () => {
     const response = await axiosSecure("/classes");
     return response.data;
   });
+
+  const handlePermission = (id, type) => {
+    setDisabledButtons((prevState) => ({
+      ...prevState,
+      [id]: true,
+    }));
+
+    let permission = "";
+    if (type === "approve") {
+      permission = "approved";
+    } else if (type === "deny") {
+      permission = "denied";
+    }
+    fetch(`http://localhost:5000/class/permission/${id}`, {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        permission: permission,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount) {
+          refetch();
+        }
+      });
+  };
   return (
     <>
       <SectionTitle heading="List Of Classes"></SectionTitle>
@@ -22,6 +54,7 @@ const ClassList = () => {
               <th>Instructor email</th>
               <th>Available seats</th>
               <th>Price</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -42,10 +75,23 @@ const ClassList = () => {
                 <td>{classData.instructorEmail}</td>
                 <td>{classData.availableSeats}</td>
                 <td>${classData.price}</td>
+                <td>{classData.status}</td>
                 <th>
-                  <button className="btn-success btn mr-2">Approve</button>
-                  <button className="btn-error btn mr-2">Deny</button>
-                  <button className="btn-info btn">Details</button>
+                  <button
+                    onClick={() => handlePermission(classData._id, "approve")}
+                    disabled={disabledButtons[classData._id]}
+                    className="btn-success btn mr-2"
+                  >
+                    Approve
+                  </button>
+                  <button
+                    onClick={() => handlePermission(classData._id, "deny")}
+                    disabled={disabledButtons[classData._id]}
+                    className="btn-error btn mr-2"
+                  >
+                    Deny
+                  </button>
+                  <button className="btn-info btn">Sent Feedback</button>
                 </th>
               </tr>
             ))}

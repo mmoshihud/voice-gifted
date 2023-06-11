@@ -9,7 +9,6 @@ const InstructorClassList = () => {
   const { user } = useAuth();
   const { data: classes = [] } = useQuery(["classes"], async () => {
     const response = await axiosSecure(`/classes/${user.email}`);
-    console.log(response);
     return response.data;
   });
   return (
