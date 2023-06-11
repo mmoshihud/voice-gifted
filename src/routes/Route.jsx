@@ -39,19 +39,11 @@ const router = createBrowserRouter([
       },
       {
         path: "add-class",
-        element: (
-          <AdminRoute>
-            <AddClass />
-          </AdminRoute>
-        ),
+        element: <AddClass />,
       },
       {
         path: "class-list",
-        element: (
-          <AdminRoute>
-            <ClassList />
-          </AdminRoute>
-        ),
+        element: <ClassList />,
       },
     ],
   },

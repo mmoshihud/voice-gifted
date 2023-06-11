@@ -10,15 +10,34 @@ const UserList = () => {
     return response.data;
   });
 
-  const makeAdminHandler = (user) => {
-    fetch(`http://localhost:5000/users/admin/${user._id}`, { method: "PATCH" })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        if (data.modifiedCount) {
-          refetch();
-        }
-      });
+  const handleUserPromotion = (user) => {
+    console.log(user.role);
+
+    if (user.role !== "admin") {
+      fetch(`http://localhost:5000/users/admin/${user._id}`, {
+        method: "PATCH",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          if (data.modifiedCount) {
+            refetch();
+          }
+        });
+    } else if (user.role !== "instructor") {
+      fetch(`http://localhost:5000/users/instructor/${user._id}`, {
+        method: "PATCH",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          if (data.modifiedCount) {
+            refetch();
+          }
+        });
+    } else {
+      console.log("error");
+    }
   };
 
   return (
@@ -47,7 +66,7 @@ const UserList = () => {
               </td>
               <td>
                 <button
-                  onClick={() => makeAdminHandler(user)}
+                  onClick={() => handleUserPromotion(user)}
                   className={`mr-2 rounded ${
                     user.role === "admin" ? "bg-red-900" : "bg-red-600"
                   } p-3 text-white`}
@@ -57,7 +76,7 @@ const UserList = () => {
                   <FaUserShield size={30} />
                 </button>
                 <button
-                  onClick={() => makeAdminHandler(user)}
+                  onClick={() => handleUserPromotion(user)}
                   className={`mr-2 rounded ${
                     user.role === "instructor"
                       ? "bg-yellow-900"

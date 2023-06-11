@@ -39,8 +39,8 @@ const ClassList = () => {
               <td>10</td>
               <td>$10</td>
               <th>
-                <button class="btn-success btn mr-2">Approve</button>
-                <button class="btn-error btn mr-2">Deny</button>
+                <button className="btn-success btn mr-2">Approve</button>
+                <button className="btn-error btn mr-2">Deny</button>
                 <button className="btn-info btn">Details</button>
               </th>
             </tr>

@@ -1,12 +1,17 @@
 import { useForm } from "react-hook-form";
 import SectionTitle from "../../../components/section-title/SectionTitle";
+import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 const imageHostingToken = import.meta.env.VITE_IMAGE_UPLOAD_TOKEN;
 
 const AddClass = () => {
   const imageHostingUrl = `https://api.imgbb.com/1/upload?key=${imageHostingToken}`;
+  const [axiosSecure] = useAxiosSecure();
+  const { user } = useAuth();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
@@ -21,6 +26,27 @@ const AddClass = () => {
       .then((response) => response.json())
       .then((imageResponse) => {
         console.log(imageResponse);
+        const imageURL = imageResponse.data.url;
+        const { name, price, availableSeats } = data;
+
+        axiosSecure
+          .post("/classes", {
+            name,
+            image: imageURL,
+            instructorName: user.displayName,
+            instructorEmail: user.email,
+            price: parseFloat(price.replace("$", "")),
+            availableSeats,
+          })
+          .then((data) => {
+            console.log(data.data);
+            if (data.data.insertedId) {
+              reset();
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          });
       })
       .catch((error) => {
         console.error(error);
@@ -74,7 +100,7 @@ const AddClass = () => {
             placeholder="Enter Instructor Name"
             className="input-bordered input w-full text-lg"
             readOnly
-            defaultValue="John"
+            defaultValue={user.displayName}
           />
         </div>
         <div className="form-control w-full">
@@ -86,7 +112,7 @@ const AddClass = () => {
             placeholder="Enter Instructor Email"
             className="input-bordered input w-full text-lg"
             readOnly
-            defaultValue="John"
+            defaultValue={user.email}
           />
         </div>
         <div className="form-control w-full max-w-xs">
