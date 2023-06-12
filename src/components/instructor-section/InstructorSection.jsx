@@ -7,7 +7,7 @@ import axios from "axios";
 const InstructorSection = () => {
   const { data: instructors = [] } = useQuery(["instructors"], async () => {
     const response = await axios.get(
-      "http://localhost:5000/users/role/instructor"
+      "https://summer-camp-backend.vercel.app/users/role/instructor"
     );
     return response.data;
   });

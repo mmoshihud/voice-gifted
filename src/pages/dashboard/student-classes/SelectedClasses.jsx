@@ -6,9 +6,11 @@ const SelectedClasses = () => {
   const [carts, refetch] = useCart();
 
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:5000/carts/${id}`).then(() => {
-      refetch();
-    });
+    axios
+      .delete(`https://summer-camp-backend.vercel.app/carts/${id}`)
+      .then(() => {
+        refetch();
+      });
   };
 
   return (

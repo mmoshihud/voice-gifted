@@ -22,7 +22,7 @@ const SignUp = () => {
       .then(() => {
         updateUserProfile(data.name, data.photo_url)
           .then(() => {
-            fetch("http://localhost:5000/users", {
+            fetch("https://summer-camp-backend.vercel.app/users", {
               method: "POST",
               headers: {
                 "content-type": "application/json",
@@ -59,7 +59,7 @@ const SignUp = () => {
     googleSignIn()
       .then((result) => {
         const user = result.user;
-        fetch("http://localhost:5000/users", {
+        fetch("https://summer-camp-backend.vercel.app/users", {
           method: "POST",
           headers: {
             "content-type": "application/json",

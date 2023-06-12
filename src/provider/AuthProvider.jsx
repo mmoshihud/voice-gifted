@@ -53,7 +53,7 @@ const AuthProvider = ({ children }) => {
       setUser(currentUser);
 
       if (currentUser) {
-        fetch("http://localhost:5000/jwt", {
+        fetch("https://summer-camp-backend.vercel.app/jwt", {
           method: "POST",
           headers: {
             "content-type": "application/json",

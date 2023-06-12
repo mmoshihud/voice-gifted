@@ -18,6 +18,8 @@ import Payment from "../pages/dashboard/payment/Payment";
 import PaymentHistory from "../pages/dashboard/payment/PaymentHistory";
 import ErrorPage from "../pages/error/404";
 import InstructorPage from "../pages/dashboard/instructor/InstructorPage";
+import InstructorRoute from "./InstructorRoute";
+import StudentRoute from "./StudentRoute";
 
 const router = createBrowserRouter([
   {
@@ -57,35 +59,67 @@ const router = createBrowserRouter([
       },
       {
         path: "add-class",
-        element: <AddClass />,
+        element: (
+          <InstructorRoute>
+            <AddClass />
+          </InstructorRoute>
+        ),
       },
       {
         path: "edit-class/:id",
-        element: <EditClass />,
+        element: (
+          <InstructorRoute>
+            <EditClass />
+          </InstructorRoute>
+        ),
       },
       {
         path: "class-list",
-        element: <ClassList />,
+        element: (
+          <AdminRoute>
+            <ClassList />
+          </AdminRoute>
+        ),
       },
       {
         path: "my-class",
-        element: <InstructorClassList />,
+        element: (
+          <InstructorRoute>
+            <InstructorClassList />
+          </InstructorRoute>
+        ),
       },
       {
         path: "my-selected-classes",
-        element: <SelectedClasses />,
+        element: (
+          <StudentRoute>
+            <SelectedClasses />
+          </StudentRoute>
+        ),
       },
       {
         path: "my-enrolled-classes",
-        element: <EnrolledClasses />,
+        element: (
+          <StudentRoute>
+            <EnrolledClasses />
+          </StudentRoute>
+        ),
       },
       {
         path: "payment",
-        element: <Payment />,
+        element: (
+          <StudentRoute>
+            <Payment />
+          </StudentRoute>
+        ),
       },
       {
         path: "payment-history",
-        element: <PaymentHistory />,
+        element: (
+          <StudentRoute>
+            <PaymentHistory />
+          </StudentRoute>
+        ),
       },
     ],
   },

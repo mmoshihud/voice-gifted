@@ -6,7 +6,9 @@ import "swiper/css";
 
 const ClassSection = () => {
   const { data: classes = [] } = useQuery(["classes"], async () => {
-    const response = await axios.get("http://localhost:5000/all-classes");
+    const response = await axios.get(
+      "https://summer-camp-backend.vercel.app/all-classes"
+    );
     return response.data;
   });
   return (

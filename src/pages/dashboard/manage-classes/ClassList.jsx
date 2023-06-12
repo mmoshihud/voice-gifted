@@ -26,7 +26,7 @@ const ClassList = () => {
     } else if (type === "deny") {
       permission = "denied";
     }
-    fetch(`http://localhost:5000/class/permission/${id}`, {
+    fetch(`https://summer-camp-backend.vercel.app/class/permission/${id}`, {
       method: "PATCH",
       headers: {
         "content-type": "application/json",

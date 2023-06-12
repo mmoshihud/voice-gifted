@@ -18,7 +18,7 @@ const UserList = () => {
     console.log(user.role);
 
     if (user.role !== "admin") {
-      fetch(`http://localhost:5000/users/admin/${user._id}`, {
+      fetch(`https://summer-camp-backend.vercel.app/users/admin/${user._id}`, {
         method: "PATCH",
       })
         .then((res) => res.json())
@@ -29,9 +29,12 @@ const UserList = () => {
           }
         });
     } else if (user.role !== "instructor") {
-      fetch(`http://localhost:5000/users/instructor/${user._id}`, {
-        method: "PATCH",
-      })
+      fetch(
+        `https://summer-camp-backend.vercel.app/users/instructor/${user._id}`,
+        {
+          method: "PATCH",
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
