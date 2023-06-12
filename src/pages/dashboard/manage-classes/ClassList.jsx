@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import ModalForm from "../../../components/modal/ModalForm";
 import SectionTitle from "../../../components/section-title/SectionTitle";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
@@ -91,7 +92,7 @@ const ClassList = () => {
                   >
                     Deny
                   </button>
-                  <button className="btn-info btn">Sent Feedback</button>
+                  <ModalForm classId={classData._id} />
                 </th>
               </tr>
             ))}

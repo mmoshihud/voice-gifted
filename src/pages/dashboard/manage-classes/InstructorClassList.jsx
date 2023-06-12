@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import Modal from "../../../components/modal/Modal";
 import SectionTitle from "../../../components/section-title/SectionTitle";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -43,7 +44,7 @@ const InstructorClassList = () => {
                 <td>${classData.price}</td>
                 <td className="uppercase">{classData.status}</td>
                 <th>
-                  <button className="btn-primary btn mr-2">Feedback</button>
+                  <Modal feedback={classData.feedback} />
                   <Link
                     to={"/dashboard/edit-class/" + classData._id}
                     className="btn-success btn"
