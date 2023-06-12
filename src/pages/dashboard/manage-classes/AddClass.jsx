@@ -143,7 +143,7 @@ const AddClass = () => {
             {...register("price", {
               required: "Price is required",
               pattern: {
-                value: /^\$\d+$/,
+                value: /^\$?\d+(\.\d{1,2})?$/,
                 message: "$ and number allowed",
               },
             })}

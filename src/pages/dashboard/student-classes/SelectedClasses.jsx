@@ -1,14 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import useAuth from "../../../hooks/useAuth";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useCart from "../../../hooks/useCart";
 
 const SelectedClasses = () => {
-  const [axiosSecure] = useAxiosSecure();
-  const { user } = useAuth();
-  const { data: carts = [] } = useQuery(["carts"], async () => {
-    const response = await axiosSecure(`/carts?email=${user?.email}`);
-    return response.data;
-  });
+  const [carts] = useCart();
+
   return (
     <table className="table text-center">
       {/* head */}
