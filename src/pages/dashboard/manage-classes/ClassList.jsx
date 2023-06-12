@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import ModalForm from "../../../components/modal/ModalForm";
 import SectionTitle from "../../../components/section-title/SectionTitle";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -43,6 +44,9 @@ const ClassList = () => {
   };
   return (
     <>
+      <Helmet>
+        <title>Class List</title>
+      </Helmet>
       <SectionTitle heading="List Of Classes"></SectionTitle>
       <div className="overflow-x-auto">
         <table className="table text-center">

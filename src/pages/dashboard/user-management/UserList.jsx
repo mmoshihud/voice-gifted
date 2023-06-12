@@ -2,12 +2,16 @@ import { useQuery } from "@tanstack/react-query";
 import SectionTitle from "../../../components/section-title/SectionTitle";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { FaUserShield, FaChalkboardTeacher } from "react-icons/fa";
+import useAuth from "../../../hooks/useAuth";
+import { Helmet } from "react-helmet-async";
 
 const UserList = () => {
   const [axiosSecure] = useAxiosSecure();
+  const { user } = useAuth();
   const { data: users = [], refetch } = useQuery(["users"], async () => {
     const response = await axiosSecure("/users");
-    return response.data;
+    const newArray = response.data.filter((item) => item.email !== user?.email);
+    return newArray;
   });
 
   const handleUserPromotion = (user) => {
@@ -42,6 +46,9 @@ const UserList = () => {
 
   return (
     <>
+      <Helmet>
+        <title>User List</title>
+      </Helmet>
       <SectionTitle heading="List Of Users"></SectionTitle>
       <table className="table-zebra table text-center">
         <thead>

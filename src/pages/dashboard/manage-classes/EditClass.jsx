@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import SectionTitle from "../../../components/section-title/SectionTitle";
@@ -74,6 +75,9 @@ const EditClass = () => {
   };
   return (
     <>
+      <Helmet>
+        <title>Edit Class</title>
+      </Helmet>
       <SectionTitle heading="Edit Class"></SectionTitle>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="form-control w-full">

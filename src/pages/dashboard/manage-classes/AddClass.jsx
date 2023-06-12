@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import SectionTitle from "../../../components/section-title/SectionTitle";
 import useAuth from "../../../hooks/useAuth";
@@ -54,6 +55,9 @@ const AddClass = () => {
   };
   return (
     <>
+      <Helmet>
+        <title>ALL Classes</title>
+      </Helmet>
       <SectionTitle heading="Add Class"></SectionTitle>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="form-control w-full">

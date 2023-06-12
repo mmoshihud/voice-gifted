@@ -1,8 +1,12 @@
 import { Link, Outlet } from "react-router-dom";
 import useAdmin from "../hooks/useAdmin";
+import useInstructor from "../hooks/useInstructor";
+import useStudent from "../hooks/useStudent";
 
 const Dashboard = () => {
   const [isAdmin, isAdminLoading] = useAdmin();
+  const [isStudent] = useStudent();
+  const [isInstructor] = useInstructor();
 
   return (
     <>
@@ -37,24 +41,32 @@ const Dashboard = () => {
                     </li>
                   </>
                 ) : null}
-                <li>
-                  <Link to="add-class">Add Class</Link>
-                </li>
-                <li>
-                  <Link to="my-class">My Class</Link>
-                </li>
-                <li>
-                  <Link to="my-selected-classes">My Selected Class</Link>
-                </li>
-                <li>
-                  <Link to="my-enrolled-classes">My Enrolled Class</Link>
-                </li>
-                <li>
-                  <Link to="payment">Payment</Link>
-                </li>
-                <li>
-                  <Link to="payment-history">Payment History</Link>
-                </li>
+                {isInstructor ? (
+                  <>
+                    <li>
+                      <Link to="add-class">Add Class</Link>
+                    </li>
+                    <li>
+                      <Link to="my-class">My Class</Link>
+                    </li>
+                  </>
+                ) : null}
+                {isStudent ? (
+                  <>
+                    <li>
+                      <Link to="my-selected-classes">My Selected Class</Link>
+                    </li>
+                    <li>
+                      <Link to="my-enrolled-classes">My Enrolled Class</Link>
+                    </li>
+                    <li>
+                      <Link to="payment">Payment</Link>
+                    </li>
+                    <li>
+                      <Link to="payment-history">Payment History</Link>
+                    </li>
+                  </>
+                ) : null}
               </>
             </ul>
           </div>

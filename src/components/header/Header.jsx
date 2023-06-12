@@ -49,15 +49,17 @@ const Header = () => {
             </li>
           </ul>
         </div>
-        <a className="btn-ghost btn text-xl normal-case">daisyUI</a>
+        <Link to="/" className="btn-ghost btn text-xl normal-case">
+          Voice Gifted
+        </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
-          <li>
+          <li className="text-xl font-bold">
             <NavLink
               className={({ isActive, isPending }) =>
                 isActive
-                  ? "text-accent"
+                  ? "text-secondary"
                   : isPending
                   ? "pending"
                   : "text-gray-500"
@@ -67,11 +69,11 @@ const Header = () => {
               Home
             </NavLink>
           </li>
-          <li>
+          <li className="text-xl font-bold">
             <NavLink
               className={({ isActive, isPending }) =>
                 isActive
-                  ? "text-accent"
+                  ? "text-secondary"
                   : isPending
                   ? "pending"
                   : "text-gray-500"
@@ -81,32 +83,62 @@ const Header = () => {
               All Classes
             </NavLink>
           </li>
+          <li className="text-xl font-bold">
+            <NavLink
+              className={({ isActive, isPending }) =>
+                isActive
+                  ? "text-secondary"
+                  : isPending
+                  ? "pending"
+                  : "text-gray-500"
+              }
+              to="/all-instructor"
+            >
+              Instructors
+            </NavLink>
+          </li>
         </ul>
       </div>
       <div className="navbar-end">
-        <ul>
-          {loading ? (
-            <div>Loading</div>
-          ) : user ? (
-            <>
-              <li>
-                <Link to="/user-profile">User Profile</Link>
-              </li>
-              <li>
-                <Link onClick={handleLogOut}>Log Out</Link>
-              </li>
-            </>
-          ) : (
-            <>
-              <li>
-                <Link to="/login">Login</Link>
-              </li>
-              <li>
-                <Link to="/sign-up">Sign Up</Link>
-              </li>
-            </>
-          )}
-        </ul>
+        <div className="dropdown-end dropdown">
+          <label tabIndex={0} className="btn-ghost btn-circle avatar btn">
+            <div className="w-10 rounded-full">
+              <img
+                src={
+                  user
+                    ? user.photoURL
+                    : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                }
+              />
+            </div>
+          </label>
+          <ul
+            tabIndex={0}
+            className="menu-compact dropdown-content menu rounded-box z-50 mt-3 w-52 bg-base-100 p-2 shadow"
+          >
+            {loading ? (
+              <div>Loading</div>
+            ) : user ? (
+              <>
+                <li>
+                  <Link to="/dashboard">Dashboard</Link>
+                </li>
+                <li>
+                  <Link onClick={handleLogOut}>Log Out</Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link to="/login">Login</Link>
+                </li>
+                <li>
+                  <Link to="/sign-up">Sign Up</Link>
+                </li>
+              </>
+            )}
+          </ul>
+        </div>
       </div>
     </div>
   );

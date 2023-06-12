@@ -16,11 +16,14 @@ import EnrolledClasses from "../pages/dashboard/student-classes/EnrolledClasses"
 import AllClass from "../pages/class/AllClass";
 import Payment from "../pages/dashboard/payment/Payment";
 import PaymentHistory from "../pages/dashboard/payment/PaymentHistory";
+import ErrorPage from "../pages/error/404";
+import InstructorPage from "../pages/dashboard/instructor/InstructorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
@@ -29,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: "/class",
         element: <AllClass />,
+      },
+      {
+        path: "/all-instructor",
+        element: <InstructorPage />,
       },
     ],
   },

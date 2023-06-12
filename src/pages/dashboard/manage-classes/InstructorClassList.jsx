@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import Modal from "../../../components/modal/Modal";
 import SectionTitle from "../../../components/section-title/SectionTitle";
@@ -14,6 +15,9 @@ const InstructorClassList = () => {
   });
   return (
     <>
+      <Helmet>
+        <title>My Class</title>
+      </Helmet>
       <SectionTitle heading="My Classes"></SectionTitle>
       <div className="overflow-x-auto">
         <table className="table text-center">
