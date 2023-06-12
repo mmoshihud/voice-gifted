@@ -10,7 +10,7 @@ const EditClass = () => {
   const imageHostingUrl = `https://api.imgbb.com/1/upload?key=${imageHostingToken}`;
   const [axiosSecure] = useAxiosSecure();
 
-  const { data: classData = [] } = useQuery(["class"], async () => {
+  const { data: classData = [], refetch } = useQuery(["class"], async () => {
     const response = await axiosSecure(`/class/edit/${id}`);
     return response.data;
   });
@@ -18,8 +18,6 @@ const EditClass = () => {
   const {
     register,
     handleSubmit,
-    reset,
-    watch,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
@@ -42,14 +40,12 @@ const EditClass = () => {
               name,
               image: imageURL,
               price: parseFloat(price.replace("$", "")),
-              availableSeats,
+              availableSeats: parseInt(availableSeats),
               status: "pending",
             })
             .then((data) => {
               console.log(data.data);
-              if (data.data.insertedId) {
-                reset();
-              }
+              refetch;
             })
             .catch((error) => {
               console.error(error);
@@ -64,14 +60,12 @@ const EditClass = () => {
         .put(`/class/update/${id}`, {
           name,
           price: parseFloat(price.replace("$", "")),
-          availableSeats,
+          availableSeats: parseInt(availableSeats),
           status: "pending",
         })
         .then((data) => {
           console.log(data.data);
-          if (data.data.insertedId) {
-            reset();
-          }
+          refetch;
         })
         .catch((error) => {
           console.error(error);
@@ -168,8 +162,8 @@ const EditClass = () => {
             {...register("price", {
               required: "Price is required",
               pattern: {
-                value: /^\$\d+$/,
-                message: "$ and number allowed",
+                value: /^\$([0-9]+(?:\.[0-9]{1,2})?)$/,
+                message: "$ and number allowed with 2 digit floating number",
               },
             })}
             placeholder="Enter Price in $ format"

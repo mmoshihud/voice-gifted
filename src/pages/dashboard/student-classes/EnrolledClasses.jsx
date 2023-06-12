@@ -1,4 +1,18 @@
+import { useQuery } from "@tanstack/react-query";
+import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+
 const EnrolledClasses = () => {
+  const { user } = useAuth();
+  const [axiosSecure] = useAxiosSecure();
+  const { data: enrolled = [] } = useQuery({
+    queryKey: ["enrolledClasses", user?.email],
+    queryFn: async () => {
+      const response = await axiosSecure(`/enrollments?email=${user?.email}`);
+      console.log(response);
+      return response.data;
+    },
+  });
   return (
     <table className="table">
       {/* head */}
@@ -7,24 +21,22 @@ const EnrolledClasses = () => {
           <th>Sl</th>
           <th>Class Name</th>
           <th>Instructor Name</th>
-          <th>Instructor email</th>
+          <th>Instructor Email</th>
           <th>Price</th>
-          <th>Action</th>
         </tr>
       </thead>
       <tbody>
-        {/* row 1 */}
-        <tr>
-          <th>1</th>
-          <td>Cy Ganderton</td>
-          <td>Quality Control</td>
-          <td>Quality Control</td>
-          <td>$12</td>
-          <td>
-            <button className="btn-success btn mr-2">Pay</button>
-            <button className="btn-error btn mr-2">Delete</button>
-          </td>
-        </tr>
+        {enrolled.map((enrol) =>
+          enrol.classDetails.map((classDetail, index) => (
+            <tr key={classDetail.classId}>
+              <th>{index + 1}</th>
+              <td>{classDetail.name}</td>
+              <td>{classDetail.instructorName}</td>
+              <td>{classDetail.instructorEmail}</td>
+              <td>{classDetail.price}</td>
+            </tr>
+          ))
+        )}
       </tbody>
     </table>
   );

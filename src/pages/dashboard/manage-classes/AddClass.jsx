@@ -35,7 +35,7 @@ const AddClass = () => {
             instructorName: user.displayName,
             instructorEmail: user.email,
             price: parseFloat(price.replace("$", "")),
-            availableSeats,
+            availableSeats: parseInt(availableSeats),
             status: "pending",
           })
           .then((data) => {
@@ -143,8 +143,8 @@ const AddClass = () => {
             {...register("price", {
               required: "Price is required",
               pattern: {
-                value: /^\$?\d+(\.\d{1,2})?$/,
-                message: "$ and number allowed",
+                value: /^\$([0-9]+(?:\.[0-9]{1,2})?)$/,
+                message: "$ and number allowed with 2 digit floating number",
               },
             })}
             placeholder="Enter Price in $ format"

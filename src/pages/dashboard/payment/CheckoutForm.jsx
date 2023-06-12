@@ -93,7 +93,7 @@ const CheckoutForm = ({ carts, price }) => {
         console.log(res.data);
         if (res.data.updateResult.modifiedCount) {
           axiosSecure
-            .post("/enrollment/classes", {
+            .post("/enrollments/classes", {
               classDetails: carts.map((item) => item),
               studentEmail: user?.email,
             })
@@ -130,9 +130,11 @@ const CheckoutForm = ({ carts, price }) => {
           Pay
         </button>
       </form>
-      {cardError ? <p className="text-red-600">{cardError}</p> : null}
+      {cardError ? (
+        <p className="font-extrabold text-red-600">{cardError}</p>
+      ) : null}
       {transactionId && (
-        <p className="text-green-500">
+        <p className="text-lg font-bold text-green-500">
           Transaction complete with transactionId: {transactionId}
         </p>
       )}

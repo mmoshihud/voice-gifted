@@ -22,6 +22,8 @@ const AllClass = () => {
           name: classInfo.name,
           price: classInfo.price,
           email: user.email,
+          instructorName: classInfo.instructorName,
+          instructorEmail: classInfo.instructorEmail,
         })
         .then((data) => {
           console.log(data.data);

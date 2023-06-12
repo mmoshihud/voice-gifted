@@ -1,7 +1,14 @@
+import axios from "axios";
 import useCart from "../../../hooks/useCart";
 
 const SelectedClasses = () => {
-  const [carts] = useCart();
+  const [carts, refetch] = useCart();
+
+  const handleDelete = (id) => {
+    axios.delete(`http://localhost:5000/carts/${id}`).then(() => {
+      refetch();
+    });
+  };
 
   return (
     <table className="table text-center">
@@ -22,8 +29,12 @@ const SelectedClasses = () => {
             <td>{item.name}</td>
             <td>${item.price}</td>
             <td>
-              <button className="btn-success btn mr-2">Pay</button>
-              <button className="btn-error btn mr-2">Delete</button>
+              <button
+                onClick={() => handleDelete(item._id)}
+                className="btn-error btn mr-2"
+              >
+                Delete
+              </button>
             </td>
           </tr>
         ))}

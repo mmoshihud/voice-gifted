@@ -52,6 +52,9 @@ const Dashboard = () => {
                 <li>
                   <Link to="payment">Payment</Link>
                 </li>
+                <li>
+                  <Link to="payment-history">Payment History</Link>
+                </li>
               </>
             </ul>
           </div>

@@ -22,6 +22,7 @@ const InstructorClassList = () => {
               <th>Class Name</th>
               <th>Available seats</th>
               <th>Price</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -40,6 +41,7 @@ const InstructorClassList = () => {
                 </td>
                 <td>{classData.availableSeats}</td>
                 <td>${classData.price}</td>
+                <td className="uppercase">{classData.status}</td>
                 <th>
                   <button className="btn-primary btn mr-2">Feedback</button>
                   <Link
