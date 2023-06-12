@@ -49,6 +49,9 @@ const Dashboard = () => {
                 <li>
                   <Link to="my-enrolled-classes">My Enrolled Class</Link>
                 </li>
+                <li>
+                  <Link to="payment">Payment</Link>
+                </li>
               </>
             </ul>
           </div>
