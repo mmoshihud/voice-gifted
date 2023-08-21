@@ -22,7 +22,12 @@ const ClassSection = () => {
       >
         {classes.map((classImage) => (
           <SwiperSlide key={classImage._id}>
-            <img src={classImage.image} alt="" />
+            <img
+              className="object-cover"
+              src={classImage.image}
+              alt=""
+              style={{ height: "600px" }}
+            />
           </SwiperSlide>
         ))}
       </Swiper>

@@ -18,7 +18,6 @@ const AllClass = () => {
   });
 
   const handleAddToCart = (classInfo) => {
-    console.log(classInfo);
     if (isStudent) {
       axiosSecure
         .post("/carts", {
@@ -62,9 +61,13 @@ const AllClass = () => {
         <div className="grid grid-cols-4 gap-8">
           {classes.map((classData) => (
             <div key={classData._id} className="card bg-base-100 shadow-xl">
-              <figure>
-                <img src={classData.image} alt="Shoes" />
-              </figure>
+              <img
+                className="object-cover"
+                src={classData.image}
+                alt="Shoes"
+                style={{ height: "300px" }}
+              />
+
               <div className="card-body">
                 <h2 className="card-title">{classData.name}</h2>
                 <p>Price: ${classData.price}</p>

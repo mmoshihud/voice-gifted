@@ -9,8 +9,10 @@ const useStudent = () => {
     queryKey: ["isStudent", user?.email],
     enabled: !loading,
     queryFn: async () => {
-      const response = await axiosSecure(`/users/student/${user?.email}`);
-      return response.data.student;
+      if (user) {
+        const response = await axiosSecure(`/users/student/${user?.email}`);
+        return response.data.student;
+      }
     },
   });
   return [isStudent, isStudentLoading];

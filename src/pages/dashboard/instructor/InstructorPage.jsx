@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 const InstructorPage = () => {
   const { data: instructors = [] } = useQuery(["instructors"], async () => {
@@ -16,9 +15,10 @@ const InstructorPage = () => {
           {instructors.map((instructor) => (
             <div key={instructor._id} className="mb-4 rounded-xl shadow-lg">
               <img
-                className="w-full rounded-xl"
+                className="w-full rounded-xl object-cover"
                 src={instructor.photoUrl}
                 alt="Product Image"
+                style={{ height: "300px" }}
               />
               <div className="px-6 py-4">
                 <div className="mb-2 text-xl font-bold">

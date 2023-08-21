@@ -23,7 +23,12 @@ const InstructorSection = () => {
       >
         {instructors.map((instructor) => (
           <SwiperSlide key={instructor._id}>
-            <img src={instructor.photoUrl} alt="" />
+            <img
+              className="object-cover"
+              src={instructor.photoUrl}
+              alt=""
+              style={{ height: "400px" }}
+            />
           </SwiperSlide>
         ))}
       </Swiper>
